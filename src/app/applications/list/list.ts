@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApplicationsService } from '../applications';
 
 @Component({
   selector: 'app-list',
-  imports: [],
   templateUrl: './list.html',
-  styleUrl: './list.css'
+  standalone: true,
+  //styleUrl: './list.css'
 })
-export class List {
+export class ApplicationsListComponent implements OnInit {
+  applications: any[] = [];
 
+  constructor(private appService: ApplicationsService) {}
+
+  ngOnInit() {
+    this.appService.getApplications().subscribe(data => this.applications = data);
+  }
 }
