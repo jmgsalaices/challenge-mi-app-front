@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        class="form-control"
+        [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+      />
+      <div class="error" *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+        Username is required.
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control"
+        [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      />
+      <div class="error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+        Password is required.
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <!-- Spinner -->
+    <div *ngIf="loading" class="spinner">Logging in...</div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || loading">
+      Login
+    </button>
+  </form>
+</div>

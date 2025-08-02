@@ -1,27 +1,46 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class Login {
-  loginForm = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-  });
+export class LoginComponent {
+  loginForm: FormGroup;
+  loading = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {}
-
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
   login() {
     if (this.loginForm.valid) {
-      this.auth.login(this.loginForm.value).subscribe({
-        next: () => this.router.navigate(['/applications']),
-        error: () => alert('Invalid login'),
-      });
+      this.loading = true;
+      this.errorMessage = '';
+
+      const { username, password } = this.loginForm.value;
+
+     if (username && password) {
+        this.auth.login({ username, password }).subscribe({
+          next: () => {
+            this.loading = false;
+            this.router.navigate(['/applications']);
+          },
+          error: (err) => {
+            this.loading = false;
+            this.errorMessage = err?.error?.message || 'Invalid username or password';
+          },
+        });
+      }
     }
   }
 }
