@@ -41,7 +41,7 @@ export class LoginComponent {
       this.loading = true;
       this.errorMessage = '';
 
-      const { username, password } = this.loginForm.value;
+          const { username, password } = this.loginForm.value;
 
      if (username && password) {
         this.auth.login({ username, password }).subscribe({
