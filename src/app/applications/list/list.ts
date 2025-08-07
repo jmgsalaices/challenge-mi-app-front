@@ -1,18 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationsService } from '../applications';
+import { CommonModule } from '@angular/common';
+import { ApplicationsService, Application } from '../applications';
+
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.html',
+  selector: 'app-applications-list',
   standalone: true,
-  //styleUrl: './list.css'
+  imports: [CommonModule],
+  templateUrl: './list.html',
 })
 export class ApplicationsListComponent implements OnInit {
-  applications: any[] = [];
+  applications: Application[] = [];
+   loading = true;
+  error = '';
+
+
 
   constructor(private appService: ApplicationsService) {}
 
-  ngOnInit() {
-    this.appService.getApplications().subscribe(data => this.applications = data);
+   ngOnInit() {
+    this.appService.getApplications().subscribe({
+      next: (data) => {
+        this.applications = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load applications';
+        this.loading = false;
+      }
+    });
   }
 }

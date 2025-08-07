@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Application {
+  id: number;
+  date: string;
+  type: 'request' | 'offer' | 'complaint';
+  status: 'submitted' | 'completed';
+}
 
 @Injectable({ providedIn: 'root' })
+
 export class ApplicationsService {
-  private api = 'http://localhost:5064/api/applications';
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:5064/api/applications'; // ajusta si es necesario
 
-  constructor(private http: HttpClient) {}
-
-  getApplications() {
-    return this.http.get<any[]>(this.api, this.getHeaders());
+   getApplications(): Observable<Application[]> {
+    return this.http.get<Application[]>(this.apiUrl);
   }
 
-  createApplication(app: { type: string; message: string }) {
-    return this.http.post(this.api, app, this.getHeaders());
-  }
-
-  private getHeaders() {
-    const token = localStorage.getItem('token');
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-      }),
-    };
+  createApplication(app: Partial<Application>): Observable<Application> {
+    return this.http.post<Application>(this.apiUrl, app);
   }
 }

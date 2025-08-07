@@ -1,1 +1,24 @@
-<p>list works!</p>
+<!-- src/app/applications/applications-list.component.html -->
+<h2>Applications List</h2>
+
+<div *ngIf="loading">Loading applications...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="!loading && !error">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let app of applications">
+      <td>{{ app.id }}</td>
+      <td>{{ app.date | date: 'short' }}</td>
+      <td>{{ app.type }}</td>
+      <td>{{ app.status }}</td>
+    </tr>
+  </tbody>
+</table>
