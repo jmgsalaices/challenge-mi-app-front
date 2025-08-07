@@ -1,3 +1,4 @@
+import { MatTableModule } from '@angular/material/table';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApplicationsService, Application } from '../applications';
@@ -6,7 +7,10 @@ import { ApplicationsService, Application } from '../applications';
 @Component({
   selector: 'app-applications-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatTableModule
+  ],       
   templateUrl: './list.html',
 })
 export class ApplicationsListComponent implements OnInit {

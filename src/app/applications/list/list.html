@@ -1,24 +1,36 @@
-<!-- src/app/applications/applications-list.component.html -->
-<h2>Applications List</h2>
+<!-- applications-list.html -->
+<div class="container mt-4">
+  <h2 class="mb-4">Applications</h2>
 
-<div *ngIf="loading">Loading applications...</div>
-<div *ngIf="error">{{ error }}</div>
+  <table mat-table [dataSource]="applications" class="mat-elevation-z8 w-100">
 
-<table *ngIf="!loading && !error">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Date</th>
-      <th>Type</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let app of applications">
-      <td>{{ app.id }}</td>
-      <td>{{ app.date | date: 'short' }}</td>
-      <td>{{ app.type }}</td>
-      <td>{{ app.status }}</td>
-    </tr>
-  </tbody>
-</table>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let app"> {{app.id}} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let app"> {{app.date}} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let app"> {{app.type}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let app">
+        <span class="badge bg-info text-dark">{{app.status}}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'date', 'type', 'status']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'date', 'type', 'status'];"></tr>
+  </table>
+</div>
