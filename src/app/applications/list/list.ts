@@ -1,7 +1,10 @@
 import { MatTableModule } from '@angular/material/table';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApplicationsService, Application } from '../applications';
+import { applicationService, Application } from '../applicationService';
+
+import { MatDialog } from '@angular/material/dialog';
+import { NewApplicationDialogComponent } from './../../new-application-dialog/new-application-dialog.component'; 
 
 
 @Component({
@@ -12,15 +15,17 @@ import { ApplicationsService, Application } from '../applications';
     MatTableModule
   ],       
   templateUrl: './list.html',
+  styleUrl: './list.css'
 })
 export class ApplicationsListComponent implements OnInit {
   applications: Application[] = [];
    loading = true;
   error = '';
 
-
-
-  constructor(private appService: ApplicationsService) {}
+  constructor(
+    private appService: applicationService, 
+    private dialog: MatDialog) 
+    {}
 
    ngOnInit() {
     this.appService.getApplications().subscribe({
@@ -33,5 +38,26 @@ export class ApplicationsListComponent implements OnInit {
         this.loading = false;
       }
     });
+
+  }
+
+  openNewApplicationDialog() {
+    
+      const dialogRef = this.dialog.open(NewApplicationDialogComponent, {
+        width: '500px',
+        disableClose: true,
+         panelClass: 'custom-modal-style'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle submitted data
+        console.
+        log('New Application:', result);
+        // TODO: send to backend, update list, etc.
+      }
+    });
+
   }
 }
+    

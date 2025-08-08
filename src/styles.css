@@ -2,3 +2,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-dialog-container {
+  background-color: white !important;
+  color: #000;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.custom-modal-style .mat-dialog-container {
+  background-color: #fff;
+}

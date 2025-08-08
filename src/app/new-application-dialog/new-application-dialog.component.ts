@@ -18,42 +18,31 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatButtonModule
   ],
+  styleUrl: './new-application-dialog.component.css',
   template: `
-    <h2 mat-dialog-title>New Application</h2>
+<h2 mat-dialog-title class="text-center">New Application</h2>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="p-4">
-      <!-- Type Selector -->
-        <mat-form-field appearance="fill" class="w-100 mb-3">
-        <mat-label>Type</mat-label>
-        <mat-select formControlName="type" required>
-          <mat-option value="request">Request</mat-option>
-          <mat-option value="offer">Offer</mat-option>
-          <mat-option value="complaint">Complaint</mat-option>
-        </mat-select>
-      </mat-form-field>
+<form [formGroup]="form" (ngSubmit)="submit()" class="p-3">
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type" required>
+      <mat-option value="request">Request</mat-option>
+      <mat-option value="offer">Offer</mat-option>
+      <mat-option value="complaint">Complaint</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-      <!-- Message Textarea -->
-      <mat-form-field appearance="fill" class="w-100 mb-3">
-        <mat-label>Message</mat-label>
-        <textarea
-          matInput
-          formControlName="message"
-          rows="4"
-          placeholder="Write your message here..."
-        ></textarea>
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Message</mat-label>
+    <textarea matInput rows="4" formControlName="message" required></textarea>
+  </mat-form-field>
 
-      <!-- Error Message -->
-      <div *ngIf="form.invalid && form.touched" class="alert alert-danger">
-        All fields are required.
-      </div>
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+  </div>
+</form>
 
-      <!-- Submit Buttons -->
-      <div class="d-flex justify-content-end mt-3">
-        <button mat-button type="button" (click)="close()">Cancel</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
-      </div>
-    </form>
   `
 })
 export class NewApplicationDialogComponent {

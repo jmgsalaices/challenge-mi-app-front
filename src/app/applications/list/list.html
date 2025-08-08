@@ -1,6 +1,10 @@
 <!-- applications-list.html -->
- 
+
+
 <div class="container mt-4">
+<button mat-raised-button color="primary" (click)="openNewApplicationDialog()">
+  New Application
+</button>
   <h2 class="mb-4">Applications</h2>
 
   <table mat-table [dataSource]="applications" class="mat-elevation-z8 w-100">
