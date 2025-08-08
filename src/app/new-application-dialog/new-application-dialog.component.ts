@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { applicationService, Application } from '../applications/applicationService';
 
 @Component({
   selector: 'app-new-application-dialog',
@@ -32,8 +33,7 @@ import { MatButtonModule } from '@angular/material/button';
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="w-100 mb-3">
-    <mat-label>Message</mat-label>
+  <mat-form-field>
     <textarea matInput rows="4" formControlName="message" required></textarea>
   </mat-form-field>
 
@@ -43,23 +43,34 @@ import { MatButtonModule } from '@angular/material/button';
   </div>
 </form>
 
-  `
+  `,
+  encapsulation: ViewEncapsulation.None
 })
 export class NewApplicationDialogComponent {
   form: FormGroup;
-  private dialogRef = inject(MatDialogRef<NewApplicationDialogComponent>);
-  private fb = inject(FormBuilder);
 
-  constructor() {
+ constructor(
+    private dialogRef: MatDialogRef<NewApplicationDialogComponent>,
+    private fb: FormBuilder,
+    private appService: applicationService
+  ) {
     this.form = this.fb.group({
       type: ['', Validators.required],
-      message: ['', Validators.required]
+      message: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
-  submit() {
+ submit(): void {
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+      const application: Application = {
+        type: this.form.value.type,
+        message: this.form.value.message,
+      };
+
+      this.appService.createApplication(application).subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err) => console.error('Error creating application', err),
+      });
     }
   }
 

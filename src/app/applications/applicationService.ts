@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Application {
-  id: number;
-  date: string;
+  id?: number;
+  date?: string;
   type: 'request' | 'offer' | 'complaint';
-  status: 'submitted' | 'completed';
+  message: string;
+  status?: 'submitted' | 'completed';
 }
 
 @Injectable({ providedIn: 'root' })

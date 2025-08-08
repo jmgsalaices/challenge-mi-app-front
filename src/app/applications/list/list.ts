@@ -60,4 +60,3 @@ export class ApplicationsListComponent implements OnInit {
 
   }
 }
-    

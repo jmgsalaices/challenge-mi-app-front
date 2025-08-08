@@ -1,3 +1,10 @@
+
+
+.custom-dialog-container {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 8px;
 mat-form-field {
   width: 100%;
 }
