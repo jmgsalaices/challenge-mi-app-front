@@ -17,12 +17,10 @@ export class applicationService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5064/api/applications'; // ajusta si es necesario
 
-   getApplications(): Observable<Application[]> {
+  getApplications(): Observable<Application[]> {
     return this.http.get<Application[]>(this.apiUrl);
   }
-
   createApplication(app: Partial<Application>): Observable<Application> {
     return this.http.post<Application>(this.apiUrl, app);
   }
-
 }

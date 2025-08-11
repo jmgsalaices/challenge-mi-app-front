@@ -28,7 +28,11 @@ export class ApplicationsListComponent implements OnInit {
     {}
 
    ngOnInit() {
-    this.appService.getApplications().subscribe({
+    
+    this.loadApplications();
+  }
+  loadApplications(): void {
+     this.appService.getApplications().subscribe({
       next: (data) => {
         this.applications = data;
         this.loading = false;
@@ -38,11 +42,8 @@ export class ApplicationsListComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
-
   openNewApplicationDialog() {
-    
       const dialogRef = this.dialog.open(NewApplicationDialogComponent, {
         width: '500px',
         disableClose: true,

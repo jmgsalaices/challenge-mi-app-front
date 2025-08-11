@@ -12,7 +12,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from './auth/auth'; // Asegúrate de que el nombre del servicio sea correcto  
+import { AuthService } from './auth/authService'; // Asegúrate de que el nombre del servicio sea correcto  
 
 
 export const AuthInterceptor: HttpInterceptorFn = (

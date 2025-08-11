@@ -33,7 +33,8 @@ import { applicationService, Application } from '../applications/applicationServ
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Message</mat-label>
     <textarea matInput rows="4" formControlName="message" required></textarea>
   </mat-form-field>
 
